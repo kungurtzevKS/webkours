@@ -13,4 +13,17 @@ router.get('/',  (req, res) => {
     }
 });
 
+router.post('/', (req, res) => {
+    try {
+        User.create({
+            login: "Egor",
+            password: "123456"
+        });
+
+        res.sendStatus(201);
+    } catch(err) {
+        res.sendStatus(501);
+    }
+})
+
 module.exports = router;
