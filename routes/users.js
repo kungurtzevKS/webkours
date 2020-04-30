@@ -13,9 +13,9 @@ router.get('/',  async (req, res) => {
     }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        User.create({
+        await User.create({
             login: "Egor",
             password: "123456"
         });
