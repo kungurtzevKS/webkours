@@ -1,18 +1,8 @@
 const Sequalizer = require('sequelize');
 
-// Models
-const userModel = require('./models/User');
-
-const sequelize = new Sequalizer("koursbd", "postgres", "admin", {
+const sequelize = new Sequalizer(process.env.db, process.env.user, process.env.password, {
+    host: process.env.host,
     dialect: "postgres"
 });
-
-// Sequlize models
-const User = sequelize.define('user', userModel);
-
-
-sequelize.sync()
-    .then(() => console.log('ok'))
-    .then(err => console.error(err));
 
 module.exports = sequelize;

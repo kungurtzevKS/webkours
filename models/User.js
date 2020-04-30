@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const sequelize = require('../ORM');
 
 const UserModel = {
     id: {
@@ -17,5 +18,7 @@ const UserModel = {
     }
 };
 
-module.exports = UserModel;
+const User = sequelize.define('user', UserModel);
+
+module.exports = User;
 
