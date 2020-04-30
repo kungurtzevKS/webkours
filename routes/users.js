@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const User = require('../models/User');
 
-router.get('/',  (req, res) => {
+router.get('/',  async (req, res) => {
     try {
-        const users =  User.findAll({raw: true});
+        const users =  await User.findAll({raw: true});
 
-        res.send(users);
+        res.send(JSON.stringify(users, null, 2));
     } catch(err) {
         console.error(err);
 
