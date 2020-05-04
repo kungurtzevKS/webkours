@@ -9,12 +9,25 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
+    const {login, password} = req.body;
+
+    if (!login || !password) {
+        res.render('login', {errors: [{msg: 'Заполните все поля!'}]});
+        return;
+    }
+
     passport.authenticate('local', {
-        successRedirect: '/main/landing',
+        successRedirect: '/main',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
 });
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'Вы вышли из аккаунта!');
+    res.redirect('/users/login');
+})
 
 router.get('/register', (req, res) => {
     res.render('register');

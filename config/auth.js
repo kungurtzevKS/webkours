@@ -13,6 +13,6 @@ module.exports = {
             return next();
         };
 
-        res.redirect('/main/landing');
+        res.redirect('/main/');
     }
 }
