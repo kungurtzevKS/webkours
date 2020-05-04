@@ -23,25 +23,26 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     const { login, password, passwordRepeat } = req.body;
 
+    const errors = [];
+
     if (!login || !password || !passwordRepeat) {
-        req.flash('error_msg', 'Заполните все поля!');
-        res.render('register');
-        return;
+        errors.push({msg: 'Заполните все поля!'});
     };
 
     if (password !== passwordRepeat) {
-        req.flash('error_msg', 'Пароли не совпадают!');
-        res.render('register');
-        return;
+        errors.push({msg: 'Пароли не совпадают!'});
     };
 
     const user = await User.findOne({where:{login}});
 
     if (user) {
-        req.flash('error_msg', 'Имя занято!');
-        res.render('register');
-        return;
+        errors.push({msg: 'Имя занято!'});
     };
+
+    if (errors.length > 0) {
+        res.render('register', {errors});
+        return;
+    }
 
     const newUser = {
         login,

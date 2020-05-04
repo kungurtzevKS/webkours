@@ -19,7 +19,6 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-
   next();
 })
 
@@ -39,7 +38,7 @@ app.use(passport.session());
 // Routes
 app.use('/users', require('./routes/users'));
 app.use('/main', require('./routes/main'));
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => res.redirect('/users/login'));
 
 
 app.listen(3000, () => {
