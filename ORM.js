@@ -1,6 +1,6 @@
 const Sequalizer = require('sequelize');
 
-const sequelize = new Sequalizer(process.env.db, process.env.user, process.env.password, {
+const sequelize = new Sequalizer('webkours', 'egor', '123', {
     host: process.env.host,
     dialect: "postgres"
 });
