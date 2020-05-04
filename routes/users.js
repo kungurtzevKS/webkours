@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const { forwardAuthenticated } = require('../config/auth');
+const bcrypt = require('bcryptjs');
+const { forwardAuthenticated, ensureAdmin, ensureAuthenticated } = require('../config/auth');
 const passport = require('../config/passport');
 
 router.get('/login', forwardAuthenticated, (req, res) => {
@@ -34,7 +34,8 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    const { login, password, passwordRepeat } = req.body;
+    const { login, password, passwordRepeat, isAdmin } = req.body;
+    console.log(req.body);
 
     const errors = [];
 
@@ -59,18 +60,59 @@ router.post('/register', async (req, res) => {
 
     const newUser = {
         login,
-        password: bcrypt.hashSync(password, 10)
+        password: bcrypt.hashSync(password, 10),
+        isAdmin: isAdmin ? true : false
     };
 
     try {
         await User.create(newUser);
 
+        req.flash('success_msg', 'Вы успешно зарегестрировались');
         res.status(201).redirect('/users/login');
     } catch(err) {
         console.error(err);
     }
 });
 
+router.post('/register-admin', ensureAuthenticated, ensureAdmin,  async (req, res) => {
+    const { login, password, passwordRepeat } = req.body;
+    console.log(req.body);
 
+    const errors = [];
+
+    if (!login || !password || !passwordRepeat) {
+        errors.push({msg: 'Заполните все поля!'});
+    };
+
+    if (password !== passwordRepeat) {
+        errors.push({msg: 'Пароли не совпадают!'});
+    };
+
+    const user = await User.findOne({where:{login}});
+
+    if (user) {
+        errors.push({msg: 'Имя занято!'});
+    };
+
+    if (errors.length > 0) {
+        res.render('/main');
+        return;
+    }
+
+    const newUser = {
+        login,
+        password: bcrypt.hashSync(password, 10),
+        isAdmin: true
+    };
+
+    try {
+        await User.create(newUser);
+
+        req.flash('success_msg', 'Вы успешно зарегестрировали нового админа!');
+        res.status(201).redirect('/main/admin');
+    } catch(err) {
+        console.error(err);
+    }
+});
 
 module.exports = router;

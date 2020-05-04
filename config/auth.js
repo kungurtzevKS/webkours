@@ -14,5 +14,13 @@ module.exports = {
         };
 
         res.redirect('/main/');
+    },
+
+    ensureAdmin: (req, res, next) => {
+        if(req.user.isAdmin) {
+            return next();
+        };
+
+        return res.redirect('/main');
     }
-}
+};
