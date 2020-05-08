@@ -15,11 +15,4 @@ router.get('/admin', ensureAuthenticated, ensureAdmin, (req, res) => {
     });
 });
 
-router.get('/news', ensureAuthenticated, (req, res) => {
-    res.render('news', {
-        user: req.user,
-        activeLink: 'news'
-    });
-})
-
 module.exports = router;

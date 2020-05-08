@@ -76,7 +76,6 @@ router.post('/register', async (req, res) => {
 
 router.post('/register-admin', ensureAuthenticated, ensureAdmin,  async (req, res) => {
     const { login, password, passwordRepeat } = req.body;
-    console.log(req.body);
 
     const errors = [];
 

@@ -4,6 +4,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/passport');
 
+
 const app = express();
 
 //Sesion
@@ -42,9 +43,8 @@ app.use(passport.session());
 // Routes
 app.use('/users', require('./routes/users'));
 app.use('/main', require('./routes/main'));
+app.use('/news', require('./routes/news'));
 app.get('/', (req, res) => res.redirect('/users/login'));
-
-
 
 app.listen(3000, () => {
   console.log("Started");
