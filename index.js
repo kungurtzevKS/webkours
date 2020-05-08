@@ -3,7 +3,11 @@ const expressLayouts = require("express-ejs-layouts");
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/passport');
+const morgan = require('morgan');
+const fs = require('fs');
 
+const logsStream = fs.createWriteStream(__dirname + '/logs.txt', {flags: 'a'});
+const logger = morgan('common', {stream: logsStream});
 
 const app = express();
 
@@ -22,6 +26,7 @@ app.set("view engine", "ejs");
 // Middleares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(logger);
 
 //Express static
 app.use(express.static(__dirname + '/views'));

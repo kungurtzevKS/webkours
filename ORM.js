@@ -1,8 +1,8 @@
 const Sequalizer = require('sequelize');
 
-const sequelize = new Sequalizer('webkours', 'egor', '123', {
-    host: process.env.host,
-    dialect: "postgres"
+const sequelize = new Sequalizer({
+    dialect: 'sqlite',
+    storage: __dirname + '/webkourse.db'
 });
 
 module.exports = sequelize;

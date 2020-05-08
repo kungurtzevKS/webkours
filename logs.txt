@@ -1,0 +1,4 @@
+::1 - - [08/May/2020:15:48:53 +0000] "GET /main HTTP/1.1" 302 68
+::1 - - [08/May/2020:15:48:53 +0000] "GET /users/login HTTP/1.1" 200 2333
+::1 - - [08/May/2020:15:48:53 +0000] "GET /users/styles/style.css HTTP/1.1" 404 161
+::1 - - [08/May/2020:15:48:53 +0000] "GET /users/styles/style.css HTTP/1.1" 404 161
