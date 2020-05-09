@@ -22,14 +22,13 @@ app.use(session({
 app.use(expressLayouts);
 app.set("view engine", "ejs");
 
+//Express static
+app.use(express.static(__dirname + '/views'));
 
 // Middleares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(logger);
-
-//Express static
-app.use(express.static(__dirname + '/views'));
 
 // flash
 app.use(flash());
