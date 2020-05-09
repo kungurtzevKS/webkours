@@ -1596,6 +1596,14 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
+.news {
+  padding-top: 100px;
+}
+
+.news-card {
+  padding: 25px 0 0 0;
+}
+
 @-webkit-keyframes animate-loading {
   0% {
     transform: rotate(0deg);
